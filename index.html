@@ -81,7 +81,7 @@
         }
 
         /* --- PAGE SECTIONS --- */
-        .page-section { display: none; min-height: 100vh; padding-top: 90px; animation: slideIn 0.6s ease-out; }
+        .page-section { display: none; min-height: 100vh; padding-top: 120px; animation: slideIn 0.6s ease-out; }
         .page-section.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
@@ -91,6 +91,7 @@
         .hero {
             height: 100vh; position: relative; overflow: hidden;
             display: flex; align-items: center; background: var(--primary);
+            padding-top: 0 !important;
         }
         
         .hero-video {
@@ -149,11 +150,7 @@
         footer { background: var(--industrial); color: white; padding: 80px 50px; }
         .footer-cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; }
         
-        /* ============================================================
-           MOBILMENY TILLÄGG (UTAN ATT RÖRA RESTERANDE DESIGN)
-           ============================================================ */
-        
-        /* Hamburger-ikonen */
+        /* MOBILMENY */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -174,7 +171,6 @@
 
         @media (max-width: 768px) {
             .menu-toggle { display: flex; }
-            
             .nav-links {
                 position: fixed; top: 0; right: -100%; width: 85%; height: 100vh;
                 background: white; flex-direction: column; padding: 100px 30px;
@@ -182,35 +178,24 @@
                 overflow-y: auto;
             }
             .nav-links.active { right: 0; }
-            
             .nav-item { height: auto; width: 100%; flex-direction: column; align-items: flex-start; margin-bottom: 15px; }
             .nav-btn { height: 50px; padding: 0; font-size: 1.1rem; width: 100%; text-align: left; }
-            
-            /* Visa dropdowns på mobil när man klickar/hovrar */
             .dropdown { 
                 position: static; opacity: 1; visibility: visible; 
                 transform: none; box-shadow: none; padding: 10px 0 10px 20px;
                 display: none; border-bottom: none; border-left: 2px solid var(--accent);
             }
             .nav-item:hover .dropdown { display: block; }
-
             .hero-content { padding-left: 5%; padding-right: 5%; text-align: center; }
             .hero-content h1 { font-size: 2.5rem; }
-            
-            /* Grids till en kolumn */
-            .container > div[style*="grid-template-columns"],
-            section[style*="grid-template-columns"],
-            div[style*="grid-template-columns"] { 
-                grid-template-columns: 1fr !important; gap: 40px !important; 
-            }
-
-            .img-stack { height: 300px; }
-            .img-main { width: 100%; position: relative; }
-            .img-sub { display: none; }
-
             .stats-grid { grid-template-columns: 1fr 1fr !important; }
             .footer-cols { grid-template-columns: 1fr !important; }
         }
+
+        /* Generic styles for new pages */
+        .page-header { border-bottom: 10px solid var(--accent); display: inline-block; font-size: 4rem; margin-bottom: 30px; }
+        .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; margin-top: 50px; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .page-header { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
@@ -253,9 +238,13 @@
             </div>
 
             <div class="nav-item"><button class="nav-btn" onclick="showPage('hitta-hit'); closeMenu()">Hitta hit</button></div>
+            
+            <div class="nav-item">
+                <button class="nav-btn" onclick="openBooking(); closeMenu()" style="color: var(--accent); font-weight: 800;">Boka Tid <i class="fa-solid fa-calendar-check"></i></button>
+            </div>
 
-            <div class="nav-item" id="mobile-cta-wrapper">
-                <button class="cta-main" onclick="showPage('kontakt'); closeMenu()" style="padding: 12px 25px; font-size: 0.7rem;">Få Offert</button>
+            <div class="nav-item">
+                <button class="cta-main" onclick="openBooking(); closeMenu()" style="padding: 12px 25px; font-size: 0.7rem; margin-left: 15px;">Få Offert</button>
             </div>
         </div>
     </nav>
@@ -263,16 +252,14 @@
     <div id="home" class="page-section active" style="padding-top: 0;">
         <header class="hero">
             <video autoplay muted loop playsinline class="hero-video">
-                <source src="https://player.vimeo.com/external/494251145.sd.mp4?s=34a8e3f422709e992a2a07c1626f83a45e75c6d3&profile_id=164&oauth2_token_id=57447761" type="video/mp4">
-                Din webbläsare stödjer inte video.
+                <source src="https://www.pexels.com/download/video/32711367/" type="video/mp4">
             </video>
-
             <div class="hero-content">
                 <p>Auktoriserad VVS-entreprenör sedan 1994</p>
                 <h1>KVALITET SOM<br>HÅLLER TÄTT.</h1>
                 <div style="display: flex; gap: 20px;">
                     <button class="cta-main" onclick="showPage('prod-10')">VVS-JOUR 24/7</button>
-                    <button class="cta-main" style="background: transparent; border: 2px solid white;" onclick="showPage('prod-1')">Våra System</button>
+                    <button class="cta-main" style="background: transparent; border: 2px solid white;" onclick="openBooking()">BOKA BESÖK</button>
                 </div>
             </div>
         </header>
@@ -289,7 +276,7 @@
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div>
                             <h4 style="color: var(--accent);"><i class="fas fa-check-circle"></i> Säker Vatten</h4>
-                            <p style="font-size: 0.8rem;">Vi följer branschens striktaste regelverk för din trygghet.</p>
+                            <p style="font-size: 0.8rem;">Vi följer branschens striktaste regelverk.</p>
                         </div>
                         <div>
                             <h4 style="color: var(--accent);"><i class="fas fa-check-circle"></i> Totalentreprenad</h4>
@@ -313,77 +300,381 @@
 
     <div id="prod-1" class="page-section">
         <div class="container">
-            <h2 style="font-size: 4rem; border-bottom: 10px solid var(--accent); display: inline-block;">Värmepumpar & Energi</h2>
-            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; margin-top: 50px;">
+            <h2 class="page-header">Värmepumpar & Energi</h2>
+            <div class="content-grid">
                 <div>
                     <h3>Sänk dina energikostnader med upp till 75%</h3>
-                    <p>Vi är specialister på installation och service av framtidens värmesystem för det nordiska klimatet. Vi arbetar endast med marknadsledande märken som Nibe, CTC och Daikin för att garantera högsta verkningsgrad.</p>
+                    <p>Vi är specialister på installation och service av framtidens värmesystem. Vi arbetar endast med marknadsledande märken som Nibe, CTC och Daikin för att garantera högsta verkningsgrad.</p>
                     <ul style="margin: 30px 0; list-style: none;">
                         <li style="padding: 15px 0; border-bottom: 1px solid #ddd;"><i class="fas fa-mountain" style="color: var(--accent); margin-right: 15px;"></i><strong>Bergvärme:</strong> Stabil energi direkt från urberget.</li>
-                        <li style="padding: 15px 0; border-bottom: 1px solid #ddd;"><i class="fas fa-wind" style="color: var(--accent); margin-right: 15px;"></i><strong>Luft/Vatten:</strong> Effektiv utvinning av värme ur utomhusluften.</li>
-                        <li style="padding: 15px 0; border-bottom: 1px solid #ddd;"><i class="fas fa-home" style="color: var(--accent); margin-right: 15px;"></i><strong>Frånluftsvärme:</strong> Återvinn värmen från ventilationen.</li>
+                        <li style="padding: 15px 0; border-bottom: 1px solid #ddd;"><i class="fas fa-wind" style="color: var(--accent); margin-right: 15px;"></i><strong>Luft/Vatten:</strong> Effektiv utvinning ur utomhusluften.</li>
+                        <li style="padding: 15px 0; border-bottom: 1px solid #ddd;"><i class="fas fa-sun" style="color: var(--accent); margin-right: 15px;"></i><strong>Solfångare:</strong> Komplettera ditt system med gratis solenergi.</li>
                     </ul>
                 </div>
+                <div class="product-card" style="background: var(--primary); color: white;">
+                    <i class="fas fa-calculator" style="color: var(--accent);"></i>
+                    <h4>Boka Energikalkyl</h4>
+                    <p>Vi räknar på din besparing och ger förslag på det mest lönsamma systemet för din fastighet.</p>
+                    <button class="cta-main" onclick="openBooking()" style="background:white; color:var(--primary); margin-top:20px; width:100%;">BOKA GRATIS BESÖK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-2" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Badrumsrenovering</h2>
+            <div class="content-grid">
                 <div>
-                    <div class="product-card" style="background: var(--primary); color: white; margin-bottom: 30px;">
-                        <i class="fas fa-calculator" style="color: var(--accent);"></i>
-                        <h4>Energikalkyl</h4>
-                        <button class="cta-main" style="margin-top: 20px; width: 100%; background: var(--white); color: var(--primary);" onclick="showPage('kontakt')">Boka hembesök</button>
+                    <h3>Ditt drömbadrum – Från vision till verklighet</h3>
+                    <p>Vi erbjuder totalentreprenad för din badrumsrenovering. Det innebär att vi tar ansvar för allt: rivning, VVS-dragning, tätskikt och plattsättning. Du har en kontaktperson genom hela projektet.</p>
+                    <p style="margin-top: 20px;">Vi är certifierade enligt BBV (Byggkeramikrådets Branschregler för Våtrum) och lämnar alltid fullständiga kvalitetsdokument.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-bath"></i>
+                    <h4>Designmöte</h4>
+                    <p>Låt oss titta på ritningar och materialval tillsammans. Vi hjälper dig optimera ytan.</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px; width:100%;">BOKA KONSULTATION</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-3" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Golvvärmesystem</h2>
+            
+            <div class="content-grid">
+                <div>
+                    <h3>Oslagbar komfort och framtidens uppvärmning</h3>
+                    <p>Vattenburen golvvärme är inte bara en fråga om varma fötter – det är ett av de mest effektiva sätten att värma upp en modern fastighet. Genom att använda hela golvytan som en stor radiator kan du sänka framledningstemperaturen i ditt värmesystem, vilket optimerar verkningsgraden på din värmepump och sänker dina energikostnader avsevärt.</p>
+                    
+                    <div style="margin: 40px 0; padding: 30px; background: var(--steel); border-left: 5px solid var(--accent); border-radius: 0 10px 10px 0;">
+                        <h4 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-lightbulb"></i> Varför välja vattenburen golvvärme?</h4>
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i> <strong>Jämn värmefördelning:</strong> Slipp kalla zoner och drag. Värmen stiger jämnt från hela golvet.</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i> <strong>Ökad frihet i inredningen:</strong> Inga fula radiatorer som tar plats under fönster eller längs väggar.</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i> <strong>Bättre inomhusklimat:</strong> Mindre damm som cirkulerar jämfört med traditionella element.</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i> <strong>Energibesparing:</strong> Möjliggör lägre rumstemperatur med bibehållen komfortkänsla.</li>
+                        </ul>
+                    </div>
+
+                    <h3>Våra installationsmetoder</h3>
+                    <p>Vi anpassar alltid installationen efter dina förutsättningar, oavsett om det gäller nyproduktion eller renovering av ett äldre hus.</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div style="padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                            <h5 style="color: var(--accent);">Ingjutning i betong</h5>
+                            <p style="font-size: 0.9rem;">Det vanligaste valet vid nyproduktion eller när man gjuter ny platta. Rören fästs på armering innan betongen hälls på, vilket ger en enorm termisk massa som håller värmen länge.</p>
+                        </div>
+                        <div style="padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                            <h5 style="color: var(--accent);">Fräsning i spånskiva</h5>
+                            <p style="font-size: 0.9rem;">Perfekt för renovering på befintliga träbjälklag. Vi fräser spår för rören direkt i golvspånskivan, vilket minimerar bygghöjden och gör att du slipper tröskelproblem.</p>
+                        </div>
+                        <div style="padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                            <h5 style="color: var(--accent);">Glespanel & Plåtar</h5>
+                            <p style="font-size: 0.9rem;">En klassisk metod för träbjälklag där värmefördelningsplåtar i aluminium sprider värmen horisontellt under ytskiktet för snabb respons.</p>
+                        </div>
+                        <div style="padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                            <h5 style="color: var(--accent);">Lågbyggande system</h5>
+                            <p style="font-size: 0.9rem;">När varje millimeter räknas. Vi använder specialskivor som endast bygger 12-15mm, idealiskt för lägenheter eller badrum.</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 40px;">Teknisk expertis & Shuntgrupper</h3>
+                    <p>Ett golvvärmesystem är bara så bra som dess reglering. Vi installerar intelligenta shuntgrupper och fördelare som ser till att rätt mängd vatten, med exakt rätt temperatur, når varje enskild slinga. Med våra smarta trådlösa termostater kan du styra temperaturen individuellt i varje rum – till och med via din smartphone.</p>
+                </div>
+
+                <div class="sidebar">
+                    <div class="product-card" style="position: sticky; top: 110px;">
+                        <i class="fas fa-temperature-high"></i>
+                        <h4>Komplett Projektpaket</h4>
+                        <p>Vi tar hand om allt från projektering och ritning till driftsättning och injustering.</p>
+                        <hr style="margin: 20px 0; opacity: 0.1;">
+                        <ul style="list-style: none; font-size: 0.85rem; margin-bottom: 25px;">
+                            <li style="margin-bottom: 8px;"><i class="fas fa-file-invoice" style="margin-right: 8px; color: var(--accent);"></i> Kostnadsfri materialspecifikation</li>
+                            <li style="margin-bottom: 8px;"><i class="fas fa-drafting-compass" style="margin-right: 8px; color: var(--accent);"></i> Förläggningsritningar</li>
+                            <li style="margin-bottom: 8px;"><i class="fas fa-tools" style="margin-right: 8px; color: var(--accent);"></i> Auktoriserad installation</li>
+                            <li style="margin-bottom: 8px;"><i class="fas fa-clipboard-check" style="margin-right: 8px; color: var(--accent);"></i> Provtryckning & Intyg</li>
+                        </ul>
+                        <button class="cta-main" onclick="openBooking()" style="width: 100%;">BOKA PROJEKTERING</button>
+                        <p style="font-size: 0.7rem; text-align: center; margin-top: 15px; opacity: 0.6;">Svar inom 24h för offertförfrågningar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px;">
+                <div style="text-align: center; padding: 30px; background: white; box-shadow: var(--shadow); border-radius: 15px;">
+                    <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h5>Säker Vatten-garanti</h5>
+                    <p style="font-size: 0.85rem;">Alla våra kopplingar utförs enligt gällande branschregler för att minimera risk för läckage.</p>
+                </div>
+                <div style="text-align: center; padding: 30px; background: white; box-shadow: var(--shadow); border-radius: 15px;">
+                    <i class="fas fa-leaf" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h5>Energismart</h5>
+                    <p style="font-size: 0.85rem;">Sänk din energiförbrukning med upp till 15% genom att optimera värmekurvan med golvvärme.</p>
+                </div>
+                <div style="text-align: center; padding: 30px; background: white; box-shadow: var(--shadow); border-radius: 15px;">
+                    <i class="fas fa-house-user" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h5>Alla ytskikt</h5>
+                    <p style="font-size: 0.85rem;">Vi installerar system anpassade för både parkett, klinker, laminat och plastmatta.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-4" class="page-section" style="background: linear-gradient(180deg, var(--white) 0%, var(--steel) 100%);">
+        <div class="container">
+            <h2 class="page-header">Stambyten & Relining</h2>
+            
+            <div class="content-grid">
+                <div>
+                    <h3 style="color: var(--primary); font-size: 2.2rem; margin-bottom: 25px;">Livsförlängande åtgärder för fastighetens hjärta</h3>
+                    <p>Avloppssystemet är en av fastighetens mest kritiska komponenter, men också den som syns minst. När rören når en viss ålder – ofta runt 40–60 år – börjar godset i gjutjärnsrör tunnas ut eller plaströr bli spröda. Vi specialiserar oss på att diagnostisera och åtgärda dessa system innan allvarliga problem uppstår.</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0;">
+                        <div style="background: var(--white); padding: 25px; border-top: 4px solid var(--primary); box-shadow: var(--shadow);">
+                            <h4 style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-hammer" style="color: var(--accent);"></i> Traditionellt Stambyte
+                            </h4>
+                            <p style="font-size: 0.9rem; margin-top: 10px;">Den mest omfattande metoden där vi byter ut alla gamla rör mot helt nya. Detta innebär att vi öppnar upp schakt och ofta renoverar badrummen samtidigt. Resultatet är ett helt nytt system med maximal livslängd.</p>
+                        </div>
+                        <div style="background: var(--white); padding: 25px; border-top: 4px solid var(--accent); box-shadow: var(--shadow);">
+                            <h4 style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-magic" style="color: var(--primary);"></i> Modern Relining
+                            </h4>
+                            <p style="font-size: 0.9rem; margin-top: 10px;">Ett kostnadseffektivt alternativ där vi skapar ett "rör i röret". Genom att infodra de befintliga stammarna med en slitstark epoxystrumpa återställs funktionen utan att vi behöver riva väggar eller golv.</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 50px;">Processen: Från inspektion till klart system</h3>
+                    <div style="position: relative; margin-top: 30px; padding-left: 30px; border-left: 2px dashed var(--accent);">
+                        <div style="margin-bottom: 30px; position: relative;">
+                            <span style="position: absolute; left: -41px; top: 0; background: var(--primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px;">1</span>
+                            <h5>Digital Rörinspektion</h5>
+                            <p style="font-size: 0.85rem;">Vi för in högupplösta kameror i systemet för att kartlägga sprickor, rotinträngningar och beläggningar. Du får en komplett dokumentation över rörens faktiska skick.</p>
+                        </div>
+                        <div style="margin-bottom: 30px; position: relative;">
+                            <span style="position: absolute; left: -41px; top: 0; background: var(--primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px;">2</span>
+                            <h5>Mekanisk Rensning</h5>
+                            <p style="font-size: 0.85rem;">Innan åtgärd rensas rören mekaniskt från rost och avlagringar för att återställa den ursprungliga diametern och skapa en perfekt fästyta för nytt material.</p>
+                        </div>
+                        <div style="margin-bottom: 0; position: relative;">
+                            <span style="position: absolute; left: -41px; top: 0; background: var(--primary); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px;">3</span>
+                            <h5>Installation & Härdning</h5>
+                            <p style="font-size: 0.85rem;">Vi installerar de nya komponenterna eller applicerar foder. Vid relining härdas materialet till en självbärande enhet som tål extrem belastning.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="product-card" style="position: sticky; top: 110px; background: var(--industrial); color: white; border: none;">
+                        <i class="fas fa-microscope" style="color: var(--accent);"></i>
+                        <h4 style="color: white;">Boka en statuskontroll</h4>
+                        <p style="opacity: 0.8;">Är du osäker på skicket i din BRF eller villa? En filmning ger svar direkt.</p>
+                        <ul style="list-style: none; margin: 25px 0; font-size: 0.85rem;">
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="fas fa-video" style="color: var(--accent); margin-top: 4px;"></i>
+                                <span><strong>Kamerainspektion:</strong> Fullständig genomgång av liggande och stående stammar.</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="fas fa-file-pdf" style="color: var(--accent); margin-top: 4px;"></i>
+                                <span><strong>Beslutsunderlag:</strong> Teknisk rapport med rekommenderade åtgärder.</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="fas fa-hard-hat" style="color: var(--accent); margin-top: 4px;"></i>
+                                <span><strong>Expertis:</strong> Utfört av certifierade rörtekniker.</span>
+                            </li>
+                        </ul>
+                        <button class="cta-main" onclick="openBooking()" style="width: 100%; background: var(--accent);">BOKA INSPEKTION</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 80px; background: var(--primary); border-radius: 20px; padding: 40px; color: white;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;">
+                    <div>
+                        <h6 style="color: var(--accent); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Material</h6>
+                        <p style="font-size: 1.1rem; font-weight: 600;">Skarvfria system</p>
+                        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Vi använder armerad polymer som eliminerar risken för rotinträngning vid skarvar.</p>
+                    </div>
+                    <div>
+                        <h6 style="color: var(--accent); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Metod</h6>
+                        <p style="font-size: 1.1rem; font-weight: 600;">Schaktfri teknik</p>
+                        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Vår reliningmetod kräver minimalt utrymme och boende kan bo kvar under hela arbetet.</p>
+                    </div>
+                    <div>
+                        <h6 style="color: var(--accent); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Kapacitet</h6>
+                        <p style="font-size: 1.1rem; font-weight: 600;">Fullt flöde</p>
+                        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Materialet har extremt låg friktion vilket ger bättre självrensning än nya gjutjärnsrör.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="prod-10" class="page-section" style="background: #f8d7da;">
+    <div id="prod-5" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Vattenrening & Filter</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Rent vatten direkt ur kranen</h3>
+                    <p>Har du problem med järn, kalk eller dålig lukt i vattnet? Vi installerar kundanpassade filterlösningar för både egen brunn och kommunalt vatten.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-droplet"></i>
+                    <h4>Vattenanalys</h4>
+                    <p>Skicka in ett prov till oss så tar vi fram rätt reningsmetod.</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px; width:100%;">BOKA PROVTAGNING</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-6" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Pannbyten</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Modernisera din panncentral</h3>
+                    <p>Byt ut din gamla oljepanna eller elkasset mot en modern pelletspanna eller en energieffektiv elpanna. Vi demonterar och forslar bort din gamla utrustning.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-fire-burner"></i>
+                    <h4>Modernisering</h4>
+                    <p>Vi ser över hela systemet inklusive expansionskärl och ventiler.</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px; width:100%;">BOKA BESIKTNING</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-7" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Industriell Rördragning</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Specialister på industriella flöden</h3>
+                    <p>Vi utför svetsning och rördragning för processindustri, fjärrvärme och större kylanläggningar. Våra montörer har alla nödvändiga licenser för tryckkärlsarbeten.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-industry"></i>
+                    <h4>Projektering</h4>
+                    <p>Vi hjälper till med ritningar och dimensionering av rörsystem.</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px; width:100%;">BOKA MÖTE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-8" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Kyl- & AC-installation</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Håll kylan under varma sommardagar</h3>
+                    <p>Vi installerar AC-anläggningar för både hem och kontor. Från enkla split-aggregat till större centrala kylsystem. Vi är certifierade för hantering av köldmedier.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-snowflake"></i>
+                    <h4>Installation</h4>
+                    <p>Professionell montering som säkrar drift och garantier.</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px; width:100%;">BOKA INSTALLATION</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-9" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Smart Home VVS</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Intelligent styrning av ditt hem</h3>
+                    <p>Styr din uppvärmning och få varningar vid vattenläckage direkt i mobilen. Vi integrerar smarta termostater och vattenfelsbrytare i ditt befintliga system.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-mobile-screen"></i>
+                    <h4>Full kontroll</h4>
+                    <p>Spara energi genom att optimera värmen efter ditt dygnsschema.</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px; width:100%;">BOKA RÅDGIVNING</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prod-10" class="page-section" style="background: #fff0f0;">
         <div class="container" style="text-align: center;">
             <h2 style="color: #721c24; font-size: 4rem;">VVS-JOUR 24/7</h2>
             <div style="background: white; padding: 50px; border-radius: 20px; margin-top: 40px; box-shadow: var(--shadow);">
+                <i class="fas fa-truck-fast" style="font-size: 4rem; color: #dc3545; margin-bottom: 20px;"></i>
                 <h3 style="font-size: 3rem; color: var(--primary);">RING: 020 - 123 456 78</h3>
-                <p>Vi är på plats inom 2 timmar i hela storstadsområdet.</p>
+                <p>Akuta läckage, stopp i avlopp eller totalt värmebortfall? Vi svarar dygnet runt, året om.</p>
+                <button class="cta-main" onclick="window.location.href='tel:02012345678'" style="margin-top:30px; background:#dc3545;">RING JOUR DIREKT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="om-historia" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Vår Historia</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Tre decennier av hantverk</h3>
+                    <p>DIN VVS-FIRMA grundades 1994 med en enkel vision: att erbjuda hantverksskicklighet i kombination med den modernaste tekniken. Det som började som en enskild firma med en servicebil har idag vuxit till en av regionens mest betrodda VVS-partners.</p>
+                    <p>Vi är stolta över att fortfarande ha kvar kunder som anlitade oss under vårt första verksamma år.</p>
+                </div>
+                <div class="product-card"><i class="fas fa-clock-rotate-left"></i><h4>Sedan 1994</h4></div>
             </div>
         </div>
     </div>
 
     <div id="om-miljo" class="page-section">
         <div class="container">
-            <h2 style="font-size: 4rem; border-bottom: 10px solid var(--accent); display: inline-block; margin-bottom: 40px;">Miljöpolicy</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+            <h2 class="page-header">Miljöpolicy</h2>
+            <div class="content-grid">
                 <div>
-                    <h3>Hållbara installationer för framtiden</h3>
-                    <p style="margin-top: 20px;">För oss på DIN VVS-FIRMA är miljöansvar en central del av vårt dagliga arbete. Vi förstår att de val vi gör idag påverkar morgondagens miljö.</p>
+                    <h3>Hållbarhet i varje rördragning</h3>
+                    <p>Vi arbetar aktivt för att minska vår miljöpåverkan genom att optimera körrutter, källsortera allt rivningsmaterial och alltid rekommendera de mest energieffektiva lösningarna till våra kunder.</p>
                 </div>
+                <div class="product-card" style="background: #e8f5e9;"><i class="fas fa-leaf" style="color: #2e7d32;"></i><h4>Gröna val</h4></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="om-certifikat" class="page-section">
+        <div class="container">
+            <h2 class="page-header">Certifieringar</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Din trygghet är vår prioritet</h3>
+                    <p>Vi innehar alla nödvändiga certifikat för att utföra arbeten enligt försäkringsbolagens krav:</p>
+                    <ul style="margin-top: 20px;">
+                        <li>Auktoriserat VVS-företag (Säker Vatten)</li>
+                        <li>Byggkeramikrådets Våtrumsbehörighet (BBV)</li>
+                        <li>Kylbehörighet (Incerta)</li>
+                        <li>ID06 för säker arbetsplats</li>
+                    </ul>
+                </div>
+                <div class="product-card"><i class="fas fa-shield-halved"></i><h4>Garanterat arbete</h4></div>
             </div>
         </div>
     </div>
 
     <div id="hitta-hit" class="page-section">
         <div class="container">
-            <h2 style="font-size: 4rem; border-bottom: 10px solid var(--accent); display: inline-block; margin-bottom: 40px;">Hitta hit</h2>
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 50px; align-items: center;">
+            <h2 class="page-header">Hitta hit</h2>
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 50px;">
                 <div>
-                    <h3 style="color: var(--primary); margin-bottom: 20px;">Vårt Huvudkontor</h3>
-                    <p style="font-size: 1.1rem; margin-bottom: 30px;">Sveavägen 10, Stockholm</p>
+                    <h3 style="color: var(--primary);">Besöksadress</h3>
+                    <p>Sveavägen 10, 111 57 Stockholm</p>
+                    <p style="margin-top: 10px;"><strong>Telefon:</strong> 031 - 99 88 77</p>
+                    <p><strong>E-post:</strong> info@vvs-firman.se</p>
+                    <button class="cta-main" onclick="openBooking()" style="margin-top:20px;">BOKA MÖTE PÅ KONTORET</button>
                 </div>
-                <div style="border-radius: 20px; overflow: hidden; height: 300px; box-shadow: var(--shadow); background: #eee;">
-                    <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.9048384917412!2d18.064917416072483!3d59.33385731764614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d6061389895%3A0x6a190209dfa99676!2sSveav%C3%A4gen%2010%2C%20111%2057%20Stockholm!5e0!3m2!1ssv!2sse!4v1700000000000!5m2!1ssv!2sse"></iframe>
+                <div style="background: #cbd5e0; height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 5rem; color: white;"></i>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="kontakt" class="page-section">
-        <div class="container" style="max-width: 800px;">
-            <h2 style="font-size: 4rem; border-bottom: 10px solid var(--accent); display: inline-block;">Begär offert</h2>
-            <div style="background: var(--steel); padding: 50px; border-radius: 20px; box-shadow: var(--shadow); margin-top: 30px;">
-                <form>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <input type="text" placeholder="Ditt namn" style="width: 100%; padding: 15px;">
-                        <input type="email" placeholder="E-postadress" style="width: 100%; padding: 15px;">
-                    </div>
-                    <textarea placeholder="Beskriv projektet..." rows="6" style="width: 100%; padding: 15px; margin-bottom: 30px;"></textarea>
-                    <button type="button" class="cta-main" style="width: 100%;">Skicka Offertförfrågan</button>
-                </form>
             </div>
         </div>
     </div>
@@ -392,27 +683,38 @@
         <div class="footer-cols">
             <div>
                 <a href="#" class="logo" style="color: white;">DIN<span>VVS-FIRMA</span></a>
+                <p style="margin-top: 20px; opacity: 0.7;">Professionella VVS-lösningar för privatpersoner, BRF:er och industri.</p>
             </div>
             <div>
-                <h4>Kontaktuppgifter</h4>
+                <h4>Kontakt</h4>
+                <p>Sveavägen 10</p>
                 <p>031 - 99 88 77</p>
+                <p>info@vvs-firman.se</p>
             </div>
             <div>
-                <h4>Öppettider</h4>
-                <p>Mån-Fre: 07:00 - 16:30</p>
+                <h4>Service</h4>
+                <p onclick="openBooking()" style="cursor: pointer; color: var(--accent);">Boka Tid Online</p>
+                <p onclick="showPage('prod-10')" style="cursor: pointer;">VVS-Jour</p>
+                <p onclick="showPage('om-miljo')" style="cursor: pointer;">Hållbarhet</p>
             </div>
             <div>
-                <h4>Certifikat</h4>
-                <p>Säker Vatten</p>
+                <h4>Certifierad</h4>
+                <p><i class="fas fa-award"></i> Säker Vatten</p>
+                <p><i class="fas fa-award"></i> BBV Certifierad</p>
+                <p><i class="fas fa-award"></i> AAA-Rating</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 60px; opacity: 0.4;">
-            © 2026 DIN VVS-FIRMA & SANITETSTEKNIK AB
+        <div style="text-align: center; margin-top: 60px; opacity: 0.4; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;">
+            © 2026 DIN VVS-FIRMA & SANITETSTEKNIK AB. Alla rättigheter förbehållna.
         </div>
     </footer>
 
     <script>
-        // Logik för att byta sida
+        // Funktion för att öppna Setmore bokningssystem
+        function openBooking() {
+            window.open('https://johanshantverkab.setmore.com', '_blank');
+        }
+
         function showPage(pageId) {
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(sec => sec.classList.remove('active'));
@@ -423,7 +725,6 @@
             }
         }
 
-        // --- MOBILMENY LOGIK ---
         const menuToggle = document.getElementById('mobile-menu');
         const navLinks = document.querySelector('.nav-links');
 
@@ -435,7 +736,6 @@
             navLinks.classList.remove('active');
         }
 
-        // Animation vid scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
